@@ -11,5 +11,5 @@ Class {
 { #category : 'accessing' }
 CashState >> totalFor: aDocument [
 	
-	^aDocument outstandingAmount.
+	^aDocument calculateBalance.
 ]

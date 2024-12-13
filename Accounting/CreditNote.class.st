@@ -20,7 +20,7 @@ CreditNote >> calculateTotal [
 CreditNote >> registerPayment: anAmount to: aAccount [
 
 	| paymentAmount |
-	paymentAmount := (anAmount min: self outstandingAmount).  "Ensure no overpayment"
+	paymentAmount := (anAmount min: self calculateBalance).  "Ensure no overpayment"
 	aAccount withdraw: paymentAmount.  "For most documents, deposit money"
 	paidAmount := paidAmount + paymentAmount.
 ]

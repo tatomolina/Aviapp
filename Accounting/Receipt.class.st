@@ -11,7 +11,7 @@ Class {
 { #category : 'initialization' }
 Receipt >> calculateBalance [ 
 
-	^payment negated.
+	^paidAmount negated.
 ]
 
 { #category : 'initialization' }

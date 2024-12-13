@@ -30,6 +30,8 @@ AccountTest >> setUp [
 	bank := Account new name: 'Bank'; yourself.
 	invoice := Invoice new.
 	invoice addItem: self configureArticle quantity: 1.
+	creditNote := CreditNote new.
+	creditNote addItem: self configureArticle quantity: 1.
 	
 ]
 
@@ -40,7 +42,7 @@ AccountTest >> testAccountBalanceUpdate [
 	invoice registerPayment: 400 to: bank.
     
 	"Verify that the bank balance reflects the payment made"
-	self assert: bank balance = 400.
+	self assert: bank balance equals: 400.
 ]
 
 { #category : 'tests' }
@@ -124,4 +126,14 @@ AccountTest >> testWithdraw [
 	
 	self assert: cash balance equals: 600.
 	self assert: cash movements size equals: 1.
+]
+
+{ #category : 'tests' }
+AccountTest >> testWithdrawPaymentFromAccount [
+
+	bank initialBalance: 1000.
+	creditNote registerPayment: 400 to: bank.
+	
+	self assert: bank balance equals: 600.
+	self assert: bank movements size equals: 1.
 ]

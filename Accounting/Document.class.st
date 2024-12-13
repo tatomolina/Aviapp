@@ -28,7 +28,8 @@ Document >> addItem: aProduct quantity: aQuantity [
 { #category : 'totals' }
 Document >> calculateBalance [
 
-	^self calculateSubtotal + self calculateVat - paidAmount.
+	"Calculate the remaining amount to be paid for this document"
+	^self total - paidAmount.
 ]
 
 { #category : 'totals' }
@@ -77,13 +78,6 @@ Document >> items [
 ]
 
 { #category : 'totals' }
-Document >> outstandingAmount [
-
-	"Calculate the remaining amount to be paid for this document"
-	^self total - self paidAmount.
-]
-
-{ #category : 'totals' }
 Document >> paidAmount [
 
 	^paidAmount.
@@ -93,7 +87,7 @@ Document >> paidAmount [
 Document >> registerPayment: anAmount to: aAccount [
 
 	| paymentAmount |
-	paymentAmount := (anAmount min: self outstandingAmount).  "Ensure no overpayment"
+	paymentAmount := (anAmount min: self calculateBalance).  "Ensure no overpayment"
 	aAccount deposit: paymentAmount.  "For most documents, deposit money"
 	paidAmount := paidAmount + paymentAmount.
 ]

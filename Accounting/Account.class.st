@@ -6,7 +6,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'name',
-		'description',
 		'balance',
 		'movements'
 	],

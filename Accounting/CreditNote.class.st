@@ -15,3 +15,12 @@ CreditNote >> calculateTotal [
 	total := super calculateTotal.
 	^total negated.
 ]
+
+{ #category : 'initialization' }
+CreditNote >> registerPayment: anAmount to: aAccount [
+
+	| paymentAmount |
+	paymentAmount := (anAmount min: self outstandingAmount).  "Ensure no overpayment"
+	aAccount withdraw: paymentAmount.  "For most documents, deposit money"
+	paidAmount := paidAmount + paymentAmount.
+]

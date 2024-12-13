@@ -13,3 +13,11 @@ Receipt >> calculateBalance [
 
 	^payment negated.
 ]
+
+{ #category : 'initialization' }
+Receipt >> registerPayment: anAmount to: aAccount [
+
+  "Receipts can accept any payment amount"
+	aAccount deposit: anAmount.  "Always deposit money in receipt"
+	paidAmount := paidAmount + anAmount.
+]

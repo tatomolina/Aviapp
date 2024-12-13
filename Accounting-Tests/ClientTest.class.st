@@ -49,7 +49,7 @@ ClientTest >> configureCreditNote [
 	
 	| creditNote1 |
    creditNote1 :=  CreditNote new.
-	creditNote1 state: 'current account'.
+	creditNote1 state: CurrentAccountState new.
 	creditNote1 addItem: self configureArticle2 quantity: 1.
 	^creditNote1.
 ]
@@ -79,7 +79,7 @@ ClientTest >> configureInvoice1 [
 	
 	| invoice |
    invoice :=  Invoice new.
-	invoice state: 'current account'.
+	invoice state: CurrentAccountState new.
 	invoice addItem: self configureArticle1 quantity: 2.
 	invoice addItem: self configureArticle2 quantity: 4.
 	invoice addItem: self configureService quantity: 1.
@@ -91,7 +91,7 @@ ClientTest >> configureInvoice2 [
 	
 	| invoice |
    invoice :=  Invoice new.
-	invoice state: 'current account'.
+	invoice state: CurrentAccountState new.
 	invoice addItem: self configureArticle1 quantity: 2.
 	invoice addItem: self configureFlight quantity: 1.
 	^invoice.
@@ -102,9 +102,9 @@ ClientTest >> configureInvoice3 [
 	
 	| invoice |
    invoice :=  Invoice new.
-	invoice state: 'cash'.
 	invoice addItem: self configureArticle2 quantity: 1.
 	invoice addItem: self configureArticle1 quantity: 3.
+	invoice registerPayment: 847 to: Account new.
 	^invoice.
 ]
 

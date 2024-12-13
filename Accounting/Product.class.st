@@ -27,7 +27,7 @@ Product >> calculateFinalPrice [
 Product >> calculateSellingPrice [
 	"Calculates the selling price"
 
-
+	self subclassResponsibility.
 ]
 
 { #category : 'calculations' }

@@ -5,11 +5,10 @@ Class {
 	#name : 'Document',
 	#superclass : 'Object',
 	#instVars : [
-		'client',
 		'date',
 		'items',
 		'state',
-		'payment'
+		'paidAmount'
 	],
 	#category : 'Accounting',
 	#package : 'Accounting'
@@ -26,10 +25,10 @@ Document >> addItem: aProduct quantity: aQuantity [
 	items add: invoiceItem.
 ]
 
-{ #category : 'initialization' }
+{ #category : 'totals' }
 Document >> calculateBalance [
 
-	^self calculateTotal - payment.
+	^self calculateSubtotal + self calculateVat - paidAmount.
 ]
 
 { #category : 'totals' }
@@ -43,7 +42,7 @@ Document >> calculateSubtotal [
 Document >> calculateTotal [
 	"Calculates the total of the invoice, VAT included"
 	
-	^self calculateSubtotal + self calculateVat.
+	^state totalFor: self.
 	
 ]
 
@@ -52,12 +51,6 @@ Document >> calculateVat [
 	"Calculates the summ of the VAT of each item"
 
 	^self items inject: 0 into: [ :sum :item | sum + item calculateItemVat ].
-]
-
-{ #category : 'accessing' }
-Document >> client: aClient [
-	
-	client := aClient.
 ]
 
 { #category : 'accessing' }
@@ -70,8 +63,9 @@ Document >> date: aDate [
 Document >> initialize [ 
 	"Initialization of the instance"
 
-	state := ''.
-	payment := 0.
+	super initialize.
+	state := CashState new.
+	paidAmount := 0.
 	date := Date today.
 	items := OrderedCollection new. "List of Items"
 ]
@@ -82,10 +76,26 @@ Document >> items [
 	^items.
 ]
 
-{ #category : 'initialization' }
-Document >> registerPayment: anAmount [
+{ #category : 'totals' }
+Document >> outstandingAmount [
 
-	payment := payment + anAmount.
+	"Calculate the remaining amount to be paid for this document"
+	^self total - self paidAmount.
+]
+
+{ #category : 'totals' }
+Document >> paidAmount [
+
+	^paidAmount.
+]
+
+{ #category : 'initialization' }
+Document >> registerPayment: anAmount to: aAccount [
+
+	| paymentAmount |
+	paymentAmount := (anAmount min: self outstandingAmount).  "Ensure no overpayment"
+	aAccount deposit: paymentAmount.  "For most documents, deposit money"
+	paidAmount := paidAmount + paymentAmount.
 ]
 
 { #category : 'accessing' }
@@ -98,4 +108,11 @@ Document >> state [
 Document >> state: aState [
 
 	state := aState.
+]
+
+{ #category : 'totals' }
+Document >> total [
+
+	"Calculate the total amount for this document"
+	^self calculateSubtotal + self calculateVat.
 ]

@@ -89,8 +89,8 @@ DocumentTest >> setUp [
 { #category : 'tests' }
 DocumentTest >> testCalculateBalance [
 
-	invoice registerPayment: 10000.
-	self assert: invoice calculateBalance equals: 17641.8 - 10000.
+	invoice registerPayment: 10000 to: Account new.
+	self assert: invoice calculateTotal equals: 17641.8 - 10000.
 ]
 
 { #category : 'tests' }

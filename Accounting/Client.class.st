@@ -39,11 +39,7 @@ Client >> address: anAddress [
 Client >> currentAccountBalance [
 	"Calculate the summ of the documents that have a current account state"
 	
-	^self documents inject: 0 into: [ :sum :doc | 
-		( doc state = 'current account' )
-		ifTrue: [ sum + doc calculateTotal] 
-		ifFalse: [ sum ]
-		].
+	^self documents inject: 0 into: [ :sum :doc | sum + doc calculateTotal].
 ]
 
 { #category : 'accessing' }

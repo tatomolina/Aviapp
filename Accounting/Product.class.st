@@ -9,7 +9,8 @@ Class {
 		'description',
 		'code',
 		'vat',
-		'stock'
+		'stock',
+		'taxes'
 	],
 	#category : 'Accounting',
 	#package : 'Accounting'
@@ -21,12 +22,18 @@ Product >> addStock: aNumber [
 	self subclassResponsibility.
 ]
 
+{ #category : 'accessing' }
+Product >> addTax: aTax [
+
+	taxes add: aTax.
+]
+
 { #category : 'calculations' }
 Product >> calculateFinalPrice [
 	"Adds the VAT to the price"
 
 
-	^self calculateSellingPrice + self calculateVatAmount.
+	^self calculateSellingPrice + self calculateVatAmount + self calculateTaxesAmount.
 
 ]
 
@@ -38,10 +45,17 @@ Product >> calculateSellingPrice [
 ]
 
 { #category : 'calculations' }
+Product >> calculateTaxesAmount [
+	"Calculates the amount that the VAT represents"
+
+	^self taxes inject: 0 into: [ :sum :tax | sum + (self calculateSellingPrice * tax percentage) ].
+]
+
+{ #category : 'calculations' }
 Product >> calculateVatAmount [
 	"Calculates the amount that the VAT represents"
 
-	^self calculateSellingPrice * vat / 100
+	^self calculateSellingPrice * vat percentage.
 ]
 
 { #category : 'accessing' }
@@ -68,7 +82,7 @@ Product >> description: aDescription [
 	description := aDescription.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 Product >> initialize [ 
 
 	super initialize.
@@ -76,6 +90,7 @@ Product >> initialize [
 	self name: ''.
 	self description: ''.
 	self code: ''.
+	taxes := OrderedCollection new.
 ]
 
 { #category : 'adding' }
@@ -112,6 +127,12 @@ Product >> stock [
 Product >> stock: aNumber [
 
 	stock := aNumber.
+]
+
+{ #category : 'accessing' }
+Product >> taxes [
+
+	^taxes.
 ]
 
 { #category : 'accessing' }

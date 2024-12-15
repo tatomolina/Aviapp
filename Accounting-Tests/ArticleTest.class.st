@@ -15,7 +15,7 @@ ArticleTest >> setUp [
 	article := Article new.
 	article purchasePrice: 100.
 	article profitMargin: 50.
-	article vat: 21.
+	article vat: (Tax new name: #Vat; percentage: 21; yourself).
 ]
 
 { #category : 'tests' }
@@ -31,7 +31,9 @@ ArticleTest >> testAddStock [
 ArticleTest >> testCalculateFinalPrice [
 	"Should calculate the selling price correctly"
 	
-	self assert: article calculateFinalPrice equals: 181.5.
+	article addTax: (Tax new name: #GrossIncome; percentage: 3.31; yourself).
+	
+	self assert: article calculateFinalPrice equals: 181.5+4.965.
 	
 	
 	
@@ -45,6 +47,15 @@ ArticleTest >> testCalculateSellingPrice [
 	
 	
 	
+]
+
+{ #category : 'tests' }
+ArticleTest >> testCalculateTaxesAmount [
+
+	article addTax: (Tax new name: #GrossIncome; percentage: 3.31; yourself).
+	article addTax: (Tax new name: #IncomeTax; percentage: 2; yourself).
+	
+	self assert: article calculateTaxesAmount equals: (150*0.0331)+(150*0.02)
 ]
 
 { #category : 'tests' }

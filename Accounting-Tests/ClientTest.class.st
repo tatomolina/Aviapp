@@ -19,7 +19,7 @@ ClientTest >> configureArticle1 [
 	article := Article new.
 	article purchasePrice: 100.
 	article profitMargin: 50.
-	article vat: 21.
+	article vat: (Tax new name: #Vat; percentage: 21; yourself).
 	article stock: 10.
 	^article.
 ]
@@ -31,7 +31,7 @@ ClientTest >> configureArticle2 [
 	article := Article new.
 	article purchasePrice: 200.
 	article profitMargin: 25.
-	article vat: 21.
+	article vat: (Tax new name: #Vat; percentage: 21; yourself).
 	article stock: 10.
 	^article.
 ]
@@ -72,7 +72,7 @@ ClientTest >> configureFlight [
     flight1 fuel: fuel.
     flight1 plane: plane.
     flight1 flightType: flightType.
-    flight1 vat: 21.
+    flight1 vat: (Tax new name: #Vat; percentage: 21; yourself).
     ^flight1.
 ]
 
@@ -117,7 +117,7 @@ ClientTest >> configureService [
     service1 := Service new.
     service1 duration: 1.3.
     service1 price: 100.
-    service1 vat: 21.
+    service1 vat: (Tax new name: #Vat; percentage: 21; yourself).
     ^service1.
 ]
 

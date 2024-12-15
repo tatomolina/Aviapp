@@ -11,7 +11,8 @@ Class {
 		'address',
 		'email',
 		'phone',
-		'documents'
+		'documents',
+		'taxId'
 	],
 	#category : 'Accounting',
 	#package : 'Accounting'

@@ -1,3 +1,6 @@
+"
+Store stock movement inside an Aricle.
+"
 Class {
 	#name : 'StockMovement',
 	#superclass : 'Object',

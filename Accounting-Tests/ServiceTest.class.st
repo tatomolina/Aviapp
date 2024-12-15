@@ -15,7 +15,7 @@ ServiceTest >> setUp [
 	service := Service new.
 	service duration: 10.
 	service price: 50.
-	service vat: 21.
+	service vat: (Tax new name: #Vat; percentage: 21; yourself).
 ]
 
 { #category : 'tests' }
@@ -30,4 +30,10 @@ ServiceTest >> testCalculateSellingPrice [
 	"Should calculate the selling price correctly"
 	
 	self assert: service calculateSellingPrice equals: 500.
+]
+
+{ #category : 'tests' }
+ServiceTest >> testIsBelowMinimumStock [ 
+
+	self assert: service isBelowMinimumStock equals: false.
 ]

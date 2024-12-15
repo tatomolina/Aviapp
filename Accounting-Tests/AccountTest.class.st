@@ -18,7 +18,7 @@ AccountTest >> configureArticle [
 	article := Article new.
 	article purchasePrice: 1000.
 	article profitMargin: 50.
-	article vat: 21.
+	article vat: (Tax new name: #Vat; percentage: 21; yourself).
 	article stock: 10.
 	^article.
 ]

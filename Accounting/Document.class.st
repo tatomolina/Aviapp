@@ -22,6 +22,7 @@ Document >> addItem: aProduct quantity: aQuantity [
 	invoiceItem := DocumentItem new.
 	invoiceItem product: aProduct.
 	invoiceItem quantity: aQuantity.
+	invoiceItem manageStock: self.
 	items add: invoiceItem.
 ]
 

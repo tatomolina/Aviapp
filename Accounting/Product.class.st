@@ -8,11 +8,18 @@ Class {
 		'name',
 		'description',
 		'code',
-		'vat'
+		'vat',
+		'stock'
 	],
 	#category : 'Accounting',
 	#package : 'Accounting'
 }
+
+{ #category : 'adding' }
+Product >> addStock: aNumber [
+
+	self subclassResponsibility.
+]
 
 { #category : 'calculations' }
 Product >> calculateFinalPrice [
@@ -71,6 +78,12 @@ Product >> initialize [
 	self code: ''.
 ]
 
+{ #category : 'adding' }
+Product >> isBelowMinimumStock [
+
+	self subclassResponsibility.
+]
+
 { #category : 'accessing' }
 Product >> name [
 
@@ -81,6 +94,24 @@ Product >> name [
 Product >> name: aName [
 
 	name := aName.
+]
+
+{ #category : 'adding' }
+Product >> removeStock: aNumber [
+
+	self subclassResponsibility.
+]
+
+{ #category : 'accessing' }
+Product >> stock [
+
+	^stock.
+]
+
+{ #category : 'accessing' }
+Product >> stock: aNumber [
+
+	stock := aNumber.
 ]
 
 { #category : 'accessing' }

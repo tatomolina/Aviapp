@@ -36,6 +36,13 @@ DocumentItem >> isService [
 	^product isKindOf: Service.
 ]
 
+{ #category : 'stock-managment' }
+DocumentItem >> manageStock: aDocument [
+
+	(aDocument isKindOf: Invoice) ifTrue: [	product addStock: quantity ].
+	(aDocument isKindOf: CreditNote) ifTrue: [ product removeStock: quantity ].
+]
+
 { #category : 'accessing' }
 DocumentItem >> product [
 	

@@ -16,22 +16,24 @@ Class {
 ClientTest >> configureArticle1 [
 	
 	| article |
-    article := Article new.
-    article purchasePrice: 100.
-    article profitMargin: 50.
-    article vat: 21.
-    ^article.
+	article := Article new.
+	article purchasePrice: 100.
+	article profitMargin: 50.
+	article vat: 21.
+	article stock: 10.
+	^article.
 ]
 
 { #category : 'configuration' }
 ClientTest >> configureArticle2 [
 	
 	| article |
-    article := Article new.
-    article purchasePrice: 200.
-    article profitMargin: 25.
-    article vat: 21.
-    ^article.
+	article := Article new.
+	article purchasePrice: 200.
+	article profitMargin: 25.
+	article vat: 21.
+	article stock: 10.
+	^article.
 ]
 
 { #category : 'configuration' }
@@ -131,6 +133,14 @@ ClientTest >> setUp [
 		addDocument: self configureInvoice2.
 		
 	
+]
+
+{ #category : 'tests' }
+ClientTest >> testClientInitialization [
+
+	self assert: client name equals: 'Tato'.
+	self assert: client surname equals: 'Molina'.
+	self assert: client documents size equals: 2.
 ]
 
 { #category : 'tests' }

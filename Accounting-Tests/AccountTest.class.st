@@ -15,11 +15,12 @@ Class {
 AccountTest >> configureArticle [
 	
 	| article |
-    article := Article new.
-    article purchasePrice: 1000.
-    article profitMargin: 50.
-    article vat: 21.
-    ^article.
+	article := Article new.
+	article purchasePrice: 1000.
+	article profitMargin: 50.
+	article vat: 21.
+	article stock: 10.
+	^article.
 ]
 
 { #category : 'running' }

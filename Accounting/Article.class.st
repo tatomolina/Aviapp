@@ -5,13 +5,24 @@ Class {
 	#name : 'Article',
 	#superclass : 'Product',
 	#instVars : [
-		'stock',
 		'purchasePrice',
-		'profitMargin'
+		'profitMargin',
+		'stockMovements',
+		'minimumStock'
 	],
 	#category : 'Accounting',
 	#package : 'Accounting'
 }
+
+{ #category : 'adding' }
+Article >> addStock: aQuantity [
+
+	|movement|
+	
+	movement := StockMovement type: #entry quantity: aQuantity timestamp: DateAndTime now.
+	stock := stock + aQuantity.
+	stockMovements add: movement. 
+]
 
 { #category : 'calculations' }
 Article >> calculateSellingPrice [
@@ -28,6 +39,26 @@ Article >> initialize [
 	self purchasePrice: 0.
 	self profitMargin: 0.
 	self stock: 0.
+	self minimumStock: 0.
+	stockMovements := OrderedCollection new.
+]
+
+{ #category : 'accessing' }
+Article >> isBelowMinimumStock [
+
+	^stock < minimumStock.
+]
+
+{ #category : 'accessing' }
+Article >> minimumStock [
+
+	^minimumStock.
+]
+
+{ #category : 'accessing' }
+Article >> minimumStock: aNumber [
+
+	minimumStock := aNumber.
 ]
 
 { #category : 'accessing' }
@@ -54,8 +85,22 @@ Article >> purchasePrice: anAmount [
 	purchasePrice := anAmount.
 ]
 
-{ #category : 'accessing' }
-Article >> stock: aNumber [
+{ #category : 'adding' }
+Article >> removeStock: aQuantity [
 
-	stock := aNumber.
+	| remainingStock movement |
+	remainingStock := stock - aQuantity.
+	remainingStock >= 0 ifTrue: [
+		stock := remainingStock.
+		movement := StockMovement type: #exit quantity: aQuantity negated timestamp: DateAndTime now.
+		stockMovements add: movement.
+	] ifFalse: [
+		self error: 'Not enough stock to complete the operation.'
+	].
+]
+
+{ #category : 'accessing' }
+Article >> stockMovements [
+
+	^stockMovements.
 ]

@@ -129,3 +129,10 @@ DocumentTest >> testCalculateVat [
 
 	self assert: invoice calculateVat equals: 3061.8.
 ]
+
+{ #category : 'tests' }
+DocumentTest >> testDocumentInitialization [
+
+	self assert: invoice items size equals: 4.
+	self assert: creditNote items size equals: 1.
+]

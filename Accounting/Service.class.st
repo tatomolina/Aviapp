@@ -12,6 +12,14 @@ Class {
 	#package : 'Accounting'
 }
 
+{ #category : 'adding' }
+Service >> addStock: aNumber [
+	"Is a Service. It dosent have a stock"
+	
+
+	
+]
+
 { #category : 'calculations' }
 Service >> calculateSellingPrice [
 	"It multiplies a duration of a service to  an amount to calculates the selling price"
@@ -31,6 +39,15 @@ Service >> duration: aDuration [
 	duration := aDuration.
 ]
 
+{ #category : 'adding' }
+Service >> isBelowMinimumStock [
+	"Is a service, it dosent have a stock"
+	
+	^false.
+
+	
+]
+
 { #category : 'accessing' }
 Service >> price [
 	
@@ -41,4 +58,13 @@ Service >> price [
 Service >> price: anAmount [
 	
 	price := anAmount.
+]
+
+{ #category : 'adding' }
+Service >> removeStock: aNumber [
+	"Is a Service. It dosent have a stock"
+	
+	
+
+	
 ]
